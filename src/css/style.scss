@@ -1,0 +1,26 @@
+@import 'abstracts/variables';
+
+@import 'layout/header',
+'layout/footer',
+'layout/searcher';
+
+@import 'components/buttons',
+'components/preloader',
+'components/movie-post',
+'components/swiper-slider';
+
+@import 'virtualKeyboard/components/buttons',
+'virtualKeyboard/components/keyboard';
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background: $main-bg-color;
+}
+
+.main {
+  width: 80%;
+  margin: 45px auto;
+}

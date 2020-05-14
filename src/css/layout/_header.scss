@@ -1,0 +1,13 @@
+.header {
+  margin: 40px 0;
+  text-align: center;
+  width: 100%;
+  background: $header-bg-color;
+  border-radius: 50px;
+  color: $text-color;
+}
+
+.header__title {
+  font-size: 3rem;
+  font-family: 'Candal', sans-serif;
+}

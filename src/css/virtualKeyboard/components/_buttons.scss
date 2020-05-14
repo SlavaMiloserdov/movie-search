@@ -1,0 +1,95 @@
+.button {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #0000006e;
+  border-radius: 8px;
+  margin: 1px;
+  background-color: #9ab3dec2;
+  box-shadow: 0 0 3px 0 black;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &_active {
+    background: radial-gradient(circle, rgba(34, 193, 195, 1) 0%, rgba(253, 45, 53, 1) 100%);
+  }
+}
+
+.button_backspace {
+  width: 100px;
+  grid-area: backspace;
+}
+
+.button_tab {
+  width: 50px;
+  grid-area: tab;
+}
+
+.button_delete {
+  grid-area: delete;
+}
+
+.button_capslock {
+  width: 100px;
+  grid-area: capslock;
+}
+
+.button_enter {
+  width: 100px;
+  grid-area: enter;
+}
+
+.button_shiftleft,
+.button_shiftright {
+  width: 100px;
+}
+
+.button_shiftleft {
+  grid-area: shiftLeft;
+}
+
+.button_shiftright {
+  grid-area: shiftRight;
+}
+
+.button_arrowup {
+  grid-area: arrowUp;
+}
+
+.button_arrowleft {
+  grid-area: arrowLeft;
+}
+
+.button_arrowdown {
+  grid-area: arrowDown;
+}
+
+.button_arrowright {
+  grid-area: arrowRight;
+}
+
+.button_win {
+  grid-area: win;
+}
+
+.button_altleft {
+  grid-area: altLeft;
+}
+
+.button_altright {
+  grid-area: altRight;
+}
+
+.button_ctrlleft {
+  grid-area: controlLeft;
+}
+
+.button_ctrlright {
+  grid-area: controlRight;
+}
+
+.button_space {
+  width: 377px;
+  grid-area: space;
+}

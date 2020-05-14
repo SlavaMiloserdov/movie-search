@@ -1,0 +1,53 @@
+.footer {
+  margin: 40px 0;
+  background-color: $footer-bg-color;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 50px;
+  color: $text-color;
+  font-family: sans-serif;
+}
+
+.footer__description {
+  font-size: 1.5rem;
+  margin: 12px 30px;
+}
+
+.github-info {
+  display: flex;
+  align-items: center;
+}
+
+.github-info__icon {
+  width: 25px;
+  height: 25px;
+}
+
+.github-info__acc {
+  text-decoration: none;
+  position: relative;
+  transition: all 0.6s;
+  color: $text-color;
+  margin: 12px 30px 12px 5px;
+
+  &:before {
+    content: "";
+    width: 0;
+    height: 0.1em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: $text-color;
+    transition: all 0.6s;
+  }
+
+  &:hover {
+    &:before {
+      width: 100%;
+      left: 0;
+      background: $text-color;
+    }
+  }
+}

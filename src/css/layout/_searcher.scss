@@ -1,0 +1,27 @@
+.search-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-input {
+  width: 80%;
+  background-color: $searcher-bg-color;
+  color: $text-color;
+  border: 0;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  padding: 0 0 0 5px;
+  outline: none;
+}
+
+.message {
+  font-size: 1.65rem;
+  text-align: center;
+  color: $message-color;
+  font-family: sans-serif;
+}
+
+
+.d-none {
+  display: none;
+}

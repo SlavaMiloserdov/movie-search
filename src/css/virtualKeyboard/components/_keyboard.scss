@@ -1,0 +1,33 @@
+.keyboard {
+  width: 800px;
+  display: grid;
+  grid-template-areas:
+    "button1 button2 button3 button4 button5 button6 button7 button8 button9 button10 button11 button12 button13 backspace backspace"
+    "tab button14 button15 button16 button17 button18 button19 button20 button21 button22 button23 button24 button25 button26 delete"
+    "capslock capslock button27 button28 button29 button30 button31 button32 button33 button34 button35 button36 button37 enter enter"
+    "shiftLeft shiftLeft button38 button39 button40 button41 button42 button43 button44 button45 button46 button47 arrowUp shiftRight shiftRight"
+    "controlLeft win altLeft space space space space space space space altRight arrowLeft arrowDown arrowRight controlRight";
+  border: 4px solid #51827a;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 2px;
+
+  animation: 5s linear 0s infinite alternate move_background;
+
+  @media only screen and (max-width: 1199px) {
+    display: none;
+  }
+}
+
+@keyframes move_background {
+  from {
+    background: linear-gradient(217deg, rgba(255, 0, 0, .8), rgba(255, 0, 0, 0) 70.71%),
+      linear-gradient(127deg, rgba(0, 255, 0, .8), rgba(0, 255, 0, 0) 70.71%),
+      linear-gradient(336deg, rgba(0, 0, 255, .8), rgba(0, 0, 255, 0) 70.71%);
+  }
+
+  to {
+    background: linear-gradient(250deg, rgba(255, 0, 0, .8), rgba(255, 0, 0, 0.151) 70.71%),
+      linear-gradient(150deg, rgba(0, 255, 0, .8), rgba(214, 147, 70, 0.788) 70.71%);
+  }
+}

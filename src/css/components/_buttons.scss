@@ -1,0 +1,53 @@
+.button_search {
+  width: 60px;
+  height: 30px;
+  cursor: pointer;
+  background-color: $searcher-bg-color;
+  color: $text-color;
+  border: 0;
+  border-radius: 20px;
+  outline: none;
+
+  &:hover {
+    transform: scale(1.1)
+  }
+}
+
+.button_clear-input {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('https://i.stack.imgur.com/cLnMQ.png') no-repeat center center / contain;
+  margin: 5px;
+  border: 0;
+  cursor: pointer;
+}
+
+.button_virtual-keyboard {
+  width: 60px;
+  height: 30px;
+  cursor: pointer;
+  background-image: url("https://img.icons8.com/dotty/40/000000/keyboard.png");
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: center;
+  border: 0;
+  background-color: $searcher-bg-color;
+  color: $text-color;
+  border-radius: 20px;
+}
+
+.button_close-movie-post {
+  width: 60px;
+  height: 30px;
+  cursor: pointer;
+  font-family: 'Candal', sans-serif;
+  background-color: $searcher-bg-color;
+  color: $text-color;
+  border: 0;
+  border-radius: 20px;
+
+  &:hover {
+    transform: scale(1.1)
+  }
+}

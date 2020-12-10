@@ -1,4 +1,3 @@
-
 export const MOVIES_DATA = [];
 
 export const dataLoading = { state : 'Loading' };

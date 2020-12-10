@@ -1,9 +1,12 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable import/no-cycle */
 import { renderSearcher, getMoviesData } from './searcher';
 import { renderSwiper, addSlides } from './swiper';
 import renderMovieCard from './movieCard';
 import { MOVIES_DATA, updateData, dataLoading } from './state';
+import { POSTER_URL, IMDB_URL } from './constants';
 
-const TIMEOUT_FOR_GETTING_RATING = 500;
+export let ifMoviesPostersLoaded = false;
 
 function renderHeader() {
   const headerEl = document.createElement('header');
@@ -71,32 +74,48 @@ function renderMainContainer() {
   document.body.append(mainContainerEl);
 }
 
-async function getRatingMovie(imdbID) {
-  const urlRating = `https://www.omdbapi.com/?i=${imdbID}&apikey=c73eb911`;
+export async function getRatingMovie(imdbID) {
+  const urlRating = `${IMDB_URL.omdb}/?i=${imdbID}&apikey=9c368688`;
   const rating = await fetch(urlRating).then(res => res.json()).then(data => data.imdbRating);
   return rating;
 }
 
-async function getMoviePosters(data) {
+export async function getMoviesPosters(data) {
   const arrayOfPosters = [];
-  // for (let i = 0; i < data.length; i += 1) {
-  //   const posterEl = document.createElement('img');
-  //   posterEl.classList.add('swiper-slide__poster');
-  //   posterEl.setAttribute('src', `${data[i].Poster}`);
-  //   arrayOfPosters.push(posterEl);
-  // }
-  data.forEach(movieData => {
-    const posterEl = document.createElement('img');
-    posterEl.classList.add('swiper-slide__poster');
-    posterEl.setAttribute('src', `${movieData.Poster}`);
-    arrayOfPosters.push(posterEl);
-  });
+  const arrayOfPromises = [];
 
+  data.forEach(movieData => {
+    let poster;
+
+    if (movieData.Poster === 'N/A') {
+      poster = POSTER_URL;
+    } else {
+      poster = movieData.Poster;
+    }
+    const newPromise = new Promise(function (resolve) {
+      const posterEl = document.createElement('img');
+      posterEl.classList.add('swiper-slide__poster');
+      posterEl.setAttribute('src', `${poster}`);
+      posterEl.onload = resolve;
+      posterEl.onerror = function () {
+        posterEl.setAttribute('src', POSTER_URL);
+        return resolve;
+      };
+      arrayOfPosters.push(posterEl);
+    });
+    arrayOfPromises.push(newPromise);
+  });
+  await Promise.all(arrayOfPromises);
   return arrayOfPosters;
 }
 
+
+
 export async function renderMovieCards(data) {
-  const arrayOfPostersEl = await getMoviePosters(data);
+  const arrayOfPostersEl = await getMoviesPosters(data);
+  if (arrayOfPostersEl) {
+    ifMoviesPostersLoaded = true;
+  }
   const arrayOfSlidesEl = [];
 
   for (let i = 0; i < data.length; i += 1) {
@@ -109,18 +128,17 @@ export async function renderMovieCards(data) {
 
 export async function handlerDataMovies(moviesData) {
   for (let i = 0; i < moviesData.length; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
     const rating = await getRatingMovie(moviesData[i].imdbID);
     moviesData[i].Rating = +rating;
-    moviesData[i].VideoGallery = `https://www.imdb.com/title/${moviesData[i].imdbID}/videogallery/`;
+    moviesData[i].VideoGallery = `${IMDB_URL.imdb}/title/${moviesData[i].imdbID}/videogallery/`;
   }
 
   updateData(moviesData);
 
-  setTimeout(() => {
-    renderMovieCards(MOVIES_DATA);
-    document.querySelector('.swiper-container').classList.add('loaded');
-    document.querySelector('.swiper-container').classList.remove('loaded_hiding');
-  }, TIMEOUT_FOR_GETTING_RATING);
+  await renderMovieCards(MOVIES_DATA);
+  document.querySelector('.swiper-container').classList.add('loaded');
+  document.querySelector('.swiper-container').classList.remove('loaded_hiding');
 }
 
 async function renderStartMovieCards() {
@@ -137,8 +155,3 @@ renderSwiper();
 renderStartMovieCards();
 renderPreloader();
 renderFooter();
-
-console.log('Виртуальная клавиатура появляется в самом низу, и на разрешениях > 1200px !\n' +
-  'Дополнительный функционал: при нажатии на слайд, отображается карточка ' +
-  'с подробной информацией о фильме, ссылками на трейлеры к фильму и фотогалерею.\n' +
-  'Со временем присобачу сам трейлер в неё, но пока так.');

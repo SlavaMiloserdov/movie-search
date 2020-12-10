@@ -431,6 +431,41 @@ export default function renderVirtualKeyboard() {
     }
   };
 
+  function updateKeyboard(modifier) {
+    let tempArrayButtons;
+    if (modifier === 'ru') {
+      tempArrayButtons = JSON.parse(JSON.stringify(keysRus));
+    } else {
+      tempArrayButtons = JSON.parse(JSON.stringify(keysEng));
+    }
+    keyboardButtons.map((button) => {
+      const newButton = button;
+      if (keyboardButtons.indexOf(button) > 16) {
+        const tempButton = tempArrayButtons.shift();
+        newButton.firstValue = tempButton.firstValue;
+        newButton.secondValue = tempButton.secondValue;
+        newButton.elementButton.innerText = tempButton.firstValue;
+        if (modifierCapsLock === true) {
+          capsLockHandler();
+        }
+        return newButton;
+      }
+      return button;
+    });
+  }
+
+  const changeLanguage = () => {
+    if (modifierLanguage === 'en') {
+      modifierLanguage = 'ru';
+      updateKeyboard('ru');
+      localStorage.setItem('lang', modifierLanguage);
+    } else {
+      modifierLanguage = 'en';
+      updateKeyboard('en');
+      localStorage.setItem('lang', modifierLanguage);
+    }
+  };
+
   function virtualKeyboardMouseDownHandler(event) {
     event.preventDefault();
 
@@ -523,40 +558,7 @@ export default function renderVirtualKeyboard() {
   container.append(keyboard);
   document.body.append(container);
 
-  function updateKeyboard(modifier) {
-    let tempArrayButtons;
-    if (modifier === 'ru') {
-      tempArrayButtons = JSON.parse(JSON.stringify(keysRus));
-    } else {
-      tempArrayButtons = JSON.parse(JSON.stringify(keysEng));
-    }
-    keyboardButtons.map((button) => {
-      const newButton = button;
-      if (keyboardButtons.indexOf(button) > 16) {
-        const tempButton = tempArrayButtons.shift();
-        newButton.firstValue = tempButton.firstValue;
-        newButton.secondValue = tempButton.secondValue;
-        newButton.elementButton.innerText = tempButton.firstValue;
-        if (modifierCapsLock === true) {
-          capsLockHandler();
-        }
-        return newButton;
-      }
-      return button;
-    });
-  }
-
-  const changeLanguage = () => {
-    if (modifierLanguage === 'en') {
-      modifierLanguage = 'ru';
-      updateKeyboard('ru');
-      localStorage.setItem('lang', modifierLanguage);
-    } else {
-      modifierLanguage = 'en';
-      updateKeyboard('en');
-      localStorage.setItem('lang', modifierLanguage);
-    }
-  };
+ 
 
   if (modifierLanguage === 'ru') {
     modifierLanguage = 'en';

@@ -10,7 +10,8 @@
     "dev": "webpack-dev-server --history-api-fallback --inline --open",
     "build": "npm run clear -s && webpack --progress",
     "lint": "eslint ./**/*.js",
-    "clear": "del-cli dist"
+    "clear": "del-cli dist",
+    "test": "jest"
   },
   "author": "Netizen",
   "license": "ISC",
@@ -50,6 +51,7 @@
   },
   "dependencies": {
     "core-js": "^3.4.7",
+    "movie-trailer": "^2.0.6",
     "regenerator-runtime": "^0.13.3",
     "swiper": "^5.3.8"
   }

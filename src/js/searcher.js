@@ -1,9 +1,13 @@
+/* eslint-disable import/no-cycle */
 import { handlerDataMovies } from './app';
 import { dataLoading } from './state';
 import renderVirtualKeyboard from './virtualKeyboard';
 import { updateCurrentPage } from './swiper';
+import { YANDEX_TRANSLATE_URL } from './constants';
 
 let searchInputText;
+const ifFirstFetch = true;
+const controller = new AbortController();
 
 export function getCurrentSearchText() {
     return searchInputText;
@@ -25,12 +29,17 @@ function showTranslationMessage(title) {
 }
 
 export async function getArrayOfMoviesData(title, page) {
-    const url = `https://www.omdbapi.com/?s=${title}&page=${page}&apikey=c73eb911`;
+    const url = `https://www.omdbapi.com/?s=${title}&page=${page}&apikey=9c368688`;
 
     try {
-        const data = await fetch(url)
+        // dataLoading.state = 'Loading';
+        const data = await fetch(url, {
+            signal: controller.signal
+          })
             .then(res => res.json())
-            .then(response => {                
+            .then(response => {       
+                console.log('Загружено');
+                     
                 if (response.Response === 'False' && response.Error !== 'Movie not found!') {
                     throw new Error(response.Error);
                 } else {
@@ -60,12 +69,12 @@ export async function getMoviesData(title) {
     return arrayOfMoviesData;
 }
 
-async function getTranslation(text) {
-    const urlTranslate = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20200510T144540Z.c1aa993ac7c617dd.c884314d2192bd8378cc526d8bb3b65376896783&text=${text}&lang=ru-en`;
+export async function getTranslation(text) {
+    const urlTranslate = `${YANDEX_TRANSLATE_URL}&text=${encodeURIComponent(text)}&lang=ru-en`;
 
     const res = await fetch(urlTranslate);
     const translation = await res.json();
-
+    console.log(translation);
     return translation.text[0];
 }
 
@@ -75,6 +84,7 @@ function onChangeInput() {
 
 async function onFormSubmit(event) {
     onChangeInput();
+
     document.querySelector('.message').classList.add('d-none');
     document.querySelector('.swiper-container').classList.remove('loaded');
     event.preventDefault();        
@@ -86,6 +96,7 @@ async function onFormSubmit(event) {
             showErrorMessage('', err);
             dataLoading.state = 'Error';
         });
+        console.log(searchInputText);
         showTranslationMessage(searchInputText);
     }
 

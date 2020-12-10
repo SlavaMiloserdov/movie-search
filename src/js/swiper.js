@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import Swiper from 'swiper';
 import { getArrayOfMoviesData, getCurrentSearchText } from './searcher';
 import { handlerDataMovies } from './app';
@@ -62,13 +63,15 @@ export function initializeSwiper() {
         },
     });
     swiper.on('touchStart', function (event) {
-        touchStartPosition = event.clientX;
+        touchStartPosition = event.clientX || event.touches[0].clientX;
     });
     swiper.on('touchEnd', function (event) {
-        if (event.clientX < touchStartPosition) {
+        const touchEndPosition = event.clientX || event.changedTouches[0].clientX;
+        
+        if (touchEndPosition < touchStartPosition ) {
             swiper.slideNext();
         }
-        if (event.clientX > touchStartPosition) {
+        if (touchEndPosition > touchStartPosition) {
             swiper.slidePrev();
         }
     });
@@ -84,7 +87,7 @@ async function onSlideHandler(event) {
         const titleOfCurrentMovie = currentSlide.Title;
         const yearOfCurrentMovie = currentSlide.Year;
         
-        const url = `https://www.omdbapi.com/?t=${titleOfCurrentMovie}&y=${yearOfCurrentMovie}&plot=full&apikey=c73eb911`;
+        const url = `https://www.omdbapi.com/?t=${titleOfCurrentMovie}&y=${yearOfCurrentMovie}&plot=full&apikey=9c368688`;
     
         const res = await fetch(url);
         const data = await res.json();   
@@ -102,7 +105,7 @@ export function addSlides(slides) {
     swiper.on('reachEnd', loadNextPage);
     Array.from(document.querySelectorAll('.swiper-slide')).forEach(slide => {
         slide.addEventListener('click', onSlideHandler);
-    });
+    });       
 }
 
 export function renderSwiper() {

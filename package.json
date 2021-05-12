@@ -53,6 +53,6 @@
     "core-js": "^3.4.7",
     "movie-trailer": "^2.0.6",
     "regenerator-runtime": "^0.13.3",
-    "swiper": "^5.3.8"
+    "swiper": "^6.5.1"
   }
 }
